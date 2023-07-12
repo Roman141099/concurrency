@@ -1,5 +1,6 @@
 package course.concurrency.m2_async.cf;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
 
 public class LoadGenerator {

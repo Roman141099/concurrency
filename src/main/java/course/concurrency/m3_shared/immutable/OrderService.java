@@ -52,7 +52,23 @@ public class OrderService {
         });
     }
 
+    public static void main(String[] args) throws InterruptedException {
+        OrderService orderService = new OrderService();
+
+        long order = orderService.createOrder(List.of());
+
+        ExecutorService exec = Executors.newFixedThreadPool(10);
+
+        IntStream.range(0, 10).forEach(value -> exec.execute(() -> {
+            orderService.updatePaymentInfo(order, new PaymentInfo());
+            orderService.setPacked(order);
+        }));
+
+        Thread.sleep(2000);
+    }
+
     private void deliver(Order order) {
+        System.out.println(order.getId());
         currentOrders.computeIfPresent(order.getId(), (id, toDeliver) -> order.delivered());
     }
 
